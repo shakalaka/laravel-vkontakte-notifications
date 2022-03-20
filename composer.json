@@ -1,0 +1,59 @@
+{
+    "name": "shakalaka/laravel-vkontakte-notifications",
+    "description": "Vkontakte Notifications Channel for Laravel",
+    "keywords": [
+        "vk notification",
+        "vkontakte notification",
+        "laravel",
+        "vk",
+        "vkontakte",
+        "notification",
+        "vkontakte notifications channel",
+        "vk notifications channel"
+    ],
+    "homepage": "https://github.com/shakalaka/laravel-vkontakte-notifications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tuzov.pavel",
+            "email": "mail@ptuzov.ru",
+            "homepage": "https://ptuzov.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0",
+        "illuminate/contracts": "8.45 - 9",
+        "illuminate/notifications": "8.45 - 9",
+        "illuminate/support": "8.45 - 9"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NotificationChannels\\Vkontakte\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NotificationChannels\\Vkontakte\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NotificationChannels\\Vkontakte\\VkontakteServiceProvider"
+            ]
+        }
+    }
+}
