@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ffd9eea7-7abc-4d49-9260-779fb4fee388" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-vkontakte-notification.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/phpunit.xml.dist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Exceptions/CouldNotSendNotification.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Traits/HasSharedLogic.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Vkontakte.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VkontakteChannel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VkontakteGroup.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VkontakteMessage.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VkontakteServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +156,7 @@
       <option name="presentableId" value="Default" />
       <updated>1647796462850</updated>
       <workItem from="1647796464147" duration="4499000" />
-      <workItem from="1647815445934" duration="1025000" />
+      <workItem from="1647815445934" duration="1208000" />
     </task>
     <servers />
   </component>
