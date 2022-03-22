@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use NotificationChannels\Vkontakte\Vkontakte;
 
 /**
- * Class TelegramServiceProvider.
+ * Class VkontakteServiceProvider.
  */
 class VkontakteServiceProvider extends ServiceProvider
 {

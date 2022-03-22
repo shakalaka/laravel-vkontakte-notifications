@@ -8,7 +8,7 @@ use NotificationChannels\Vkontakte\Traits\HasSharedLogic;
 /**
  * Class VkontakteGroup.
  */
-class VkontakteGroup implements JsonSerializable
+class VkontakteGroup extends VkontakteMessage implements JsonSerializable
 {
     use HasSharedLogic;
 
@@ -43,6 +43,7 @@ class VkontakteGroup implements JsonSerializable
 
         return $this;
     }
+    
 
     /**
      * @param null|float|string $content

@@ -44,6 +44,22 @@ class VkontakteMessage implements JsonSerializable
     }
 
     /**
+     * Add File to Message.
+     *
+     * Generic method to attach files of any type based on API.
+     *
+     * @param resource|StreamInterface|string $file
+     *
+     * @return $this
+     */
+    public function attachments($file, string $filename = null): self
+    {
+        $this->payload['attachments'] = is_resource($file) ? $file : fopen($file, 'rb');
+
+        return $this;
+    }
+
+    /**
      * Attach a view file as the content for the notification.
      * Supports Laravel blade template.
      *

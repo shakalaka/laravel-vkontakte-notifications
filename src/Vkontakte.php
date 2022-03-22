@@ -101,6 +101,15 @@ class Vkontakte
     {
         return $this->sendRequest('sendMessage', $params);
     }
+    /**
+     * Send text message.
+     *
+     * @throws CouldNotSendNotification
+     */
+    public function sendGroup(array $params): ?ResponseInterface
+    {
+        return $this->sendRequest('wall.post', $params);
+    }
 
     /**
      * Get updates.
