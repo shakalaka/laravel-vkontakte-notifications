@@ -42,10 +42,6 @@ class VkontakteChannel
     {
         $message = $notification->toVkontakte($notifiable);
 
-        if (is_string($message)) {
-            $message = VkontakteMessage::create($message);
-        }
-
         if ($message->toNotGiven()) {
             $to = $notifiable->routeNotificationFor('vkontakte', $notification)
                 ?? $notifiable->routeNotificationFor(self::class, $notification);
@@ -62,13 +58,11 @@ class VkontakteChannel
         }
 
         $params = $message->toArray();
-
-        $sendMethod = str_replace('Vkontakte', 'send', array_reverse(explode('\\', get_class($message)))[0]);
+        $className =  get_class($message);
+        $sendMethod = str_replace('Vkontakte', 'send', array_reverse(explode('\\', $className))[0]);
 
         try {
-            if ($message instanceof VkontakteMessage) {
-                $response = $this->vkontakte->sendMessage($params);
-            } elseif (method_exists($this->vkontakte, $sendMethod)) {
+            if (method_exists($this->vkontakte, $sendMethod)) {
                 $response = $this->vkontakte->{$sendMethod}($params);
             } else {
                 return null;

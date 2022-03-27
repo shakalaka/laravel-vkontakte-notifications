@@ -3,6 +3,7 @@
 namespace NotificationChannels\Vkontakte\Traits;
 
 use Illuminate\Support\Traits\Conditionable;
+use NotificationChannels\Vkontakte\VkontakteMessage;
 
 /**
  * Trait HasSharedLogic.
@@ -16,6 +17,9 @@ trait HasSharedLogic
 
     /** @var array Params payload. */
     protected $payload = [];
+
+    /** @var array Attachments */
+    protected $attachments = [];
 
 
     /**
@@ -112,5 +116,23 @@ trait HasSharedLogic
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+
+    /**
+     * Add File to Message.
+     *
+     * Generic method to attach files of any type based on API.
+     *
+     * @param resource|StreamInterface|string $file
+     *
+     * @return $this
+     */
+    public function attachments($file, string $filename = null): self
+    {
+        $this->attachments[] = is_resource($file) ? $file : fopen($file, 'rb');
+        $this->payload['attachments'] = $this->attachments;
+
+        return $this;
     }
 }

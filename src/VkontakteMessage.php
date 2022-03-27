@@ -13,13 +13,9 @@ class VkontakteMessage implements JsonSerializable
 {
     use HasSharedLogic;
 
-    /** @var int Message Chunk Size */
-    public $chunkSize;
-
     public function __construct(string $content = '')
     {
         $this->content($content);
-        $this->payload['parse_mode'] = 'Markdown';
     }
 
     public static function create(string $content = ''): self
@@ -32,32 +28,13 @@ class VkontakteMessage implements JsonSerializable
      *
      * @return $this
      */
-    public function content(string $content, int $limit = null): self
+    public function content(string $content): self
     {
         $this->payload['text'] = $content;
 
-        if ($limit) {
-            $this->chunkSize = $limit;
-        }
-
         return $this;
     }
 
-    /**
-     * Add File to Message.
-     *
-     * Generic method to attach files of any type based on API.
-     *
-     * @param resource|StreamInterface|string $file
-     *
-     * @return $this
-     */
-    public function attachments($file, string $filename = null): self
-    {
-        $this->payload['attachments'] = is_resource($file) ? $file : fopen($file, 'rb');
-
-        return $this;
-    }
 
     /**
      * Attach a view file as the content for the notification.
@@ -68,25 +45,5 @@ class VkontakteMessage implements JsonSerializable
     public function view(string $view, array $data = [], array $mergeData = []): self
     {
         return $this->content(View::make($view, $data, $mergeData)->render());
-    }
-
-    /**
-     * Chunk message to given size.
-     *
-     * @return $this
-     */
-    public function chunk(int $limit = 4096): self
-    {
-        $this->chunkSize = $limit;
-
-        return $this;
-    }
-
-    /**
-     * Should the message be chunked.
-     */
-    public function shouldChunk(): bool
-    {
-        return null !== $this->chunkSize;
     }
 }

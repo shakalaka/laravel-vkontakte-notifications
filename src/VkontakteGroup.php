@@ -8,7 +8,7 @@ use NotificationChannels\Vkontakte\Traits\HasSharedLogic;
 /**
  * Class VkontakteGroup.
  */
-class VkontakteGroup extends VkontakteMessage implements JsonSerializable
+class VkontakteGroup implements JsonSerializable
 {
     use HasSharedLogic;
 
@@ -16,6 +16,7 @@ class VkontakteGroup extends VkontakteMessage implements JsonSerializable
      * Send message from group name flag
      */
     private const SEND_MESSAGE_FROM_GROUP = 1;
+    public const METHOD = 'wall.post';
 
     /**
      * Vkontakte group constructor.
@@ -23,9 +24,14 @@ class VkontakteGroup extends VkontakteMessage implements JsonSerializable
      * @param null|string $content
 
      */
-    public function __construct(string $content, int $owner_id)
+    public function __construct(string $content)
     {
-        $this->content($content, $owner_id);
+        $this->content($content);
+    }
+
+    public function group(int $group): self {
+        $this->payload['owner_id'] = $group;
+        return $this;
     }
 
     /**
@@ -33,12 +39,11 @@ class VkontakteGroup extends VkontakteMessage implements JsonSerializable
      *
      * @return $this
      */
-    public function content(string $content, int $owner_id): self
+    public function content(string $content): self
     {
         $this->payload = [
             'message' => $content,
             'from_group' => self::SEND_MESSAGE_FROM_GROUP,
-            'owner_id' => $owner_id
         ];
 
         return $this;
@@ -50,9 +55,8 @@ class VkontakteGroup extends VkontakteMessage implements JsonSerializable
      *
      * @return static
      */
-    public static function create(string $content, int $owner_id): self
+    public static function create(string $content = ''): self
     {
-        return new static($content, $owner_id);
+        return new static($content);
     }
-
 }
