@@ -8,6 +8,9 @@ use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Str;
 use NotificationChannels\Vkontakte\Exceptions\CouldNotSendNotification;
 use Psr\Http\Message\ResponseInterface;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 
 /**
  * Class Vkontakte.
@@ -19,11 +22,14 @@ class Vkontakte
     /** @var Client Guzzle client */
     protected $client;
 
+    /** @var string[] Allowed Mime types  */
+    protected $valid_types = ['image/png' => 'png', 'image/jpeg' => 'jpeg']; // add more valid types that you want and so on
+
     /** @var null|string Vkontakte secret key. */
     protected $secret;
 
     /** @var string Vkontakte API Base URI */
-    protected $baseUrl;
+    protected $baseUri;
 
     /** @var string Vkontakte API Version */
     protected $version;
@@ -140,14 +146,102 @@ class Vkontakte
         return $this->sendRequest('getUpdates', $params);
     }
 
+    protected function getRandomFileName(): string
+    {
+        return $random = Str::random(20);
+    }
+
+    protected function checkAndSaveFile(string $file)
+    {
+        try {
+            $response = $this->client->get($file);
+            $headers = $response->getHeaders();
+            if (
+                !empty($headers['Content-Type'][0]) &&
+                array_key_exists($headers['Content-Type'][0], $this->valid_types)
+            ) {
+                $fileName = $this->getRandomFileName();
+                $fileContent = $response->getBody()->getContents();
+                $path = sprintf('images/%s.%s', $fileName, $this->valid_types[$headers['Content-Type'][0]]);
+
+                $save = Storage::disk('public')->put(
+                    $path,
+                    $fileContent
+                );
+                if ($save) return [
+                    'path' => storage_path($path),
+                    'file' => $fileContent,
+                    'name' => $fileName
+                ];
+
+                return false;
+            }
+
+        } catch (\Exception $e) {
+            echo 'does not exist';
+        }
+    }
+
+    protected function getAttachmentsFile(array $params): array
+    {
+        $files = [];
+        foreach ($params['attachments'] as $i => $file) {
+            $savedFile = $this->checkAndSaveFile($file);
+            if ($savedFile) {
+                //something wrong here?
+                $files[] = [
+                    'Content-type' => 'multipart/form-data',
+                    'name' => 'photo',
+                    'contents' => $savedFile['file'],
+                    'filename' => $savedFile['name'],
+                ];
+            }
+        }
+
+        return $files;
+    }
+
+    protected function getServerParams(array $params): \stdClass
+    {
+        $apiUri = sprintf('%s/method/photos.getWallUploadServer?group_id=%s&access_token=%s&v=%s', $this->baseUri, ltrim($params['owner_id'], '-'), $this->secret, $this->version);
+
+        return json_decode($this->client->get($apiUri)->getBody()->getContents());
+    }
+    
+    protected function uploadPhotos(array $params, \stdClass $server): \stdClass
+    {
+        $body = [
+            'multipart' => $this->getAttachmentsFile($params),
+            'headers' => [
+                'Content-Type' => 'multipart/form-data',
+            ]
+        ];
+
+        if (env('APP_DEBUG')) {
+            $body['debug'] = true;
+        }
+
+        $response = json_decode(
+            $this->client->request(
+                'POST',
+                $server->response->upload_url,
+                $body,
+            )
+            ->getBody()
+            ->getContents()
+        );
+
+        return $response;
+    }
+
     protected function prepareAttachments(array $params): array
     {
-        $apiUri = sprintf('%s/method/photos.getWallUploadServer?group_id=%s&access_token=%s&v=%s', $this->baseUri, $params['owner_id'], $this->secret, $this->version);
-        $result = json_decode($this->client->get($apiUri)->getBody()->getContents());
-        if (!empty($result->response->upload_url)) {
-            $upload = json_decode($this->client->post($result->response->upload_url, [
-                'photo' => $params['attachments'][0],
-            ])->getBody()->getContents());
+        if (count($params['attachments']) <= 0) return $params;
+
+        $server = $this->getServerParams($params);
+
+        if (!empty($server->response->upload_url)) {
+            $upload = $this->uploadPhotos($params, $server);
             if (!empty($upload->server)) {
                 $uploadUrl = sprintf(
                     '%s/method/photos.saveWallPhoto?group_id=%s&server=%s&photo=%s&hash=%s&access_token=%s&v=%s',
@@ -161,7 +255,6 @@ class Vkontakte
                 );
 
                 $save = json_decode($this->client->get($uploadUrl)->getBody()->getContents());
-
             }
         }
 

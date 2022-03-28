@@ -130,7 +130,7 @@ trait HasSharedLogic
      */
     public function attachments($file, string $filename = null): self
     {
-        $this->attachments[] = is_resource($file) ? $file : fopen($file, 'rb');
+        $this->attachments[] = $file;
         $this->payload['attachments'] = $this->attachments;
 
         return $this;

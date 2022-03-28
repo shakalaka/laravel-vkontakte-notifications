@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79a1fafe-e43f-4a88-972f-48a7b96e921f" name="Changes" comment="some work">
+    <list default="true" id="79a1fafe-e43f-4a88-972f-48a7b96e921f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Traits/HasSharedLogic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Traits/HasSharedLogic.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Vkontakte.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Vkontakte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VkontakteChannel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/VkontakteChannel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VkontakteGroup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/VkontakteGroup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VkontakteMessage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/VkontakteMessage.php" afterDir="false" />
     </list>
     <list id="d930b16e-3432-49bf-b55b-e3572a9c5b2c" name="notrack" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -27,15 +24,13 @@
   <component name="LineStatusTrackerManager">
     <file path="$PROJECT_DIR$/.idea/workspace.xml">
       <ranges>
-        <range start1="3" end1="5" start2="3" end2="12" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
-        <range start1="11" end1="12" start2="18" end2="19" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="120" end1="121" start2="127" end2="128" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="133" end1="134" start2="140" end2="140" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="140" end1="141" start2="146" end2="146" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="152" end1="154" start2="157" end2="160" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="156" end1="159" start2="162" end2="174" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
-        <range start1="160" end1="160" start2="175" end2="176" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
-        <range start1="164" end1="164" start2="180" end2="184" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
+        <range start1="3" end1="4" start2="3" end2="4" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="5" end1="10" start2="5" end2="5" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="25" end1="25" start2="20" end2="37" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="26" end1="41" start2="38" end2="38" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="182" end1="183" start2="179" end2="180" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="191" end1="191" start2="188" end2="196" changelist="79a1fafe-e43f-4a88-972f-48a7b96e921f" />
+        <range start1="195" end1="195" start2="200" end2="204" changelist="d930b16e-3432-49bf-b55b-e3572a9c5b2c" />
       </ranges>
     </file>
   </component>
@@ -180,7 +175,7 @@
       <workItem from="1647819361243" duration="500000" />
       <workItem from="1647947362977" duration="956000" />
       <workItem from="1647987720588" duration="1518000" />
-      <workItem from="1648417695101" duration="94000" />
+      <workItem from="1648417695101" duration="228000" />
     </task>
     <task id="LOCAL-00001" summary="some work">
       <created>1647987785144</created>
@@ -189,6 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647987785144</updated>
     </task>
+    <task id="LOCAL-00002" summary="some work">
+      <created>1648417822760</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648417822760</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
