@@ -197,4 +197,8 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="some work" />
+    <option name="LAST_COMMIT_MESSAGE" value="some work" />
+  </component>
 </project>
