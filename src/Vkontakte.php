@@ -156,18 +156,20 @@ class Vkontakte
         try {
             $response = $this->client->get($file);
             $headers = $response->getHeaders();
+            $contentType = $headers['Content-Type'];
             if (
-                !empty($headers['Content-Type'][0]) &&
-                array_key_exists($headers['Content-Type'][0], $this->valid_types)
+                !empty($contentType[0]) &&
+                array_key_exists($contentType[0], $this->valid_types)
             ) {
                 $fileName = $this->getRandomFileName();
                 $fileContent = $response->getBody()->getContents();
-                $path = sprintf('images/%s.%s', $fileName, $this->valid_types[$headers['Content-Type'][0]]);
+                $path = sprintf('images/%s.%s', $fileName, $this->valid_types[$contentType[0]]);
 
                 $save = Storage::disk('public')->put(
                     $path,
                     $fileContent
                 );
+
                 if ($save) return [
                     'path' => storage_path($path),
                     'file' => $fileContent,
