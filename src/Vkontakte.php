@@ -10,6 +10,8 @@ use NotificationChannels\Vkontakte\Exceptions\CouldNotSendNotification;
 use Psr\Http\Message\ResponseInterface;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Psr7;
+
 
 
 /**
@@ -171,8 +173,7 @@ class Vkontakte
                 );
 
                 if ($save) return [
-                    'path' => storage_path($path),
-                    'file' => $fileContent,
+                    'path' => storage_path('app/public/' . $path),
                     'name' => $fileName
                 ];
 
@@ -190,12 +191,9 @@ class Vkontakte
         foreach ($params['attachments'] as $i => $file) {
             $savedFile = $this->checkAndSaveFile($file);
             if ($savedFile) {
-                //something wrong here?
                 $files[] = [
-                    'Content-type' => 'multipart/form-data',
                     'name' => 'photo',
-                    'contents' => $savedFile['file'],
-                    'filename' => $savedFile['name'],
+                    'contents' => Psr7\Utils::tryFopen($savedFile['path'], 'r'),
                 ];
             }
         }
@@ -214,9 +212,6 @@ class Vkontakte
     {
         $body = [
             'multipart' => $this->getAttachmentsFile($params),
-            'headers' => [
-                'Content-Type' => 'multipart/form-data',
-            ]
         ];
 
         if (env('APP_DEBUG')) {
@@ -236,7 +231,16 @@ class Vkontakte
         return $response;
     }
 
-    protected function prepareAttachments(array $params): array
+    protected function setLink(array $params): array
+    {
+        if (isset($params['link']) && $params['link']) {
+            $params['attachments'] .= ', ' . $params['link'];
+        }
+
+        return $params;
+    }
+
+    protected function setAttachments(array $params): array
     {
         if (count($params['attachments']) <= 0) return $params;
 
@@ -257,6 +261,12 @@ class Vkontakte
                 );
 
                 $save = json_decode($this->client->get($uploadUrl)->getBody()->getContents());
+
+                foreach ($save->response as $response) {
+                    $photo[] = sprintf('photo%s_%s', $response->owner_id, $response->id);
+                }
+
+                $params['attachments'] = implode(',', $photo);
             }
         }
 
@@ -279,7 +289,8 @@ class Vkontakte
         $params['access_token'] = $this->secret;
         $params['v'] = $this->version;
         try {
-            $params = $this->prepareAttachments($params);
+            $params = $this->setAttachments($params);
+            $params = $this->setLink($params);
             return $this->client->post($apiUri, [
                 $multipart ? 'multipart' : 'form_params' => $params,
             ]);

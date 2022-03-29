@@ -135,4 +135,18 @@ trait HasSharedLogic
 
         return $this;
     }
+
+
+    /**
+     * Add Link to message.
+     *
+     * @param string $link
+     * @return $this
+     */
+    public function link(string $link): self
+    {
+        $this->payload['link'] = $link;
+
+        return $this;
+    }
 }
