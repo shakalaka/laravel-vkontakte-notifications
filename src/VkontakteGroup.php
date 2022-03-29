@@ -16,7 +16,11 @@ class VkontakteGroup implements JsonSerializable
      * Send message from group name flag
      */
     private const SEND_MESSAGE_FROM_GROUP = 1;
-    public const METHOD = 'wall.post';
+
+    /**
+     * Send message without author sign
+     */
+    private const SEND_MESSAGE_SIGNED = 0;
 
     /**
      * Vkontakte group constructor.
@@ -31,8 +35,10 @@ class VkontakteGroup implements JsonSerializable
 
     public function group(int $group): self {
         $this->payload['owner_id'] = $group;
+
         return $this;
     }
+
 
     /**
      * Notification message (Supports Markdown).
@@ -44,6 +50,7 @@ class VkontakteGroup implements JsonSerializable
         $this->payload = [
             'message' => $content,
             'from_group' => self::SEND_MESSAGE_FROM_GROUP,
+            'signed' => self::SEND_MESSAGE_SIGNED,
         ];
 
         return $this;
