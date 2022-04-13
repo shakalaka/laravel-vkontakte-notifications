@@ -234,6 +234,7 @@ class Vkontakte
     protected function setLink(array $params): array
     {
         if (isset($params['link']) && $params['link']) {
+            $params['attachments'] = array_key_exists('attachments', $params) === false ? $params['attachments'] : '';
             $params['attachments'] .= ', ' . $params['link'];
         }
 
