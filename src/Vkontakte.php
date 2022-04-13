@@ -242,7 +242,9 @@ class Vkontakte
 
     protected function setAttachments(array $params): array
     {
-        if (count($params['attachments']) <= 0) return $params;
+        if (array_key_exists('attachments', $params) === false || count($params['attachments']) <= 0) {
+            return $params;
+        }
 
         $server = $this->getServerParams($params);
 
